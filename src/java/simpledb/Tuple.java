@@ -1,6 +1,7 @@
 package simpledb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -13,6 +14,10 @@ public class Tuple implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private TupleDesc td;
+    private RecordId rid;
+    private ArrayList<Field> fields;
+
     /**
      * Create a new tuple with the specified schema (type).
      *
@@ -22,6 +27,11 @@ public class Tuple implements Serializable {
      */
     public Tuple(TupleDesc td) {
         // some code goes here
+        this.td = td; //????
+        this.fields = new ArrayList<>(td.numFields());
+        for (int i = 0; i < td.numFields(); i++) {
+            this.fields.add(null);
+        }
     }
 
     /**
@@ -29,7 +39,8 @@ public class Tuple implements Serializable {
      */
     public TupleDesc getTupleDesc() {
         // some code goes here
-        return null;
+        return this.td;
+        // return null;
     }
 
     /**
@@ -38,7 +49,8 @@ public class Tuple implements Serializable {
      */
     public RecordId getRecordId() {
         // some code goes here
-        return null;
+        return this.rid;
+        // return null;
     }
 
     /**
@@ -49,6 +61,7 @@ public class Tuple implements Serializable {
      */
     public void setRecordId(RecordId rid) {
         // some code goes here
+        this.rid = rid;
     }
 
     /**
@@ -61,6 +74,7 @@ public class Tuple implements Serializable {
      */
     public void setField(int i, Field f) {
         // some code goes here
+        fields.set(i, f);
     }
 
     /**
@@ -71,7 +85,8 @@ public class Tuple implements Serializable {
      */
     public Field getField(int i) {
         // some code goes here
-        return null;
+        return fields.get(i);
+        // return null;
     }
 
     /**
@@ -84,7 +99,12 @@ public class Tuple implements Serializable {
      */
     public String toString() {
         // some code goes here
-        throw new UnsupportedOperationException("Implement this");
+        String res = "";
+        for(int i = 0; i < fields.size(); ++i){
+            res += fields.get(i).toString() + " ";
+        }
+        return res;
+        // throw new UnsupportedOperationException("Implement this");
     }
 
     /**
@@ -94,7 +114,8 @@ public class Tuple implements Serializable {
     public Iterator<Field> fields()
     {
         // some code goes here
-        return null;
+        return fields.iterator();
+        // return null;
     }
 
     /**
@@ -103,5 +124,11 @@ public class Tuple implements Serializable {
     public void resetTupleDesc(TupleDesc td)
     {
         // some code goes here
+        this.td = td; // field????
+        this.fields.clear();
+        this.fields = new ArrayList<>(td.numFields());
+        for (int i = 0; i < td.numFields(); i++) {
+            this.fields.add(null);
+        }
     }
 }
